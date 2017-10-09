@@ -18,7 +18,7 @@ namespace dcmc.shared
         public async void UploadVideoDocumment(VideoInfo NewVideoInfo)
         {
             var result = await _client.IndexAsync(NewVideoInfo);
-            Console.WriteLine(result);
+            //TODO Add loggin
         }
 
         public async void AddSeedData()

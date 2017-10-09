@@ -21,7 +21,7 @@ namespace dcmc.console
             var nestie = new NestClient(elastic);
             //nestie.AddSeedData();
             var myUploader = new Uploader(nestie);
-            myUploader.Upload(@"C:\github\Main");
+            myUploader.UploadDirectory(appConfig["RootPath"]);
             Console.WriteLine("AllDone");
             Console.Read();
         }

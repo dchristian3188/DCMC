@@ -14,26 +14,33 @@ namespace dcmc.shared
             NestUploader = NestConnection;
         }
 
-        public void Upload(string StartingFolder)
+        public void UploadDirectory(string StartingFolder)
         {
 
             var directories = Directory.GetDirectories(StartingFolder);
             foreach (string currentDirectoy in directories)
             {
-                Console.WriteLine($"Processing folder [{currentDirectoy}]");
-                var files = Directory.GetFiles(currentDirectoy);
-                foreach (string file in files)
+                //Console.WriteLine($"Processing folder [{currentDirectoy}]");
+                try
                 {
-                    UploadFile(file);
+                    var files = Directory.GetFiles(currentDirectoy);
+                    foreach (string file in files)
+                    {
+                        UploadFile(file);
+                    }
+                    UploadDirectory(currentDirectoy);
                 }
-                Upload(currentDirectoy);
+                catch (System.UnauthorizedAccessException ex)
+                {
+                    Console.WriteLine($"ERROR CONNECTING TO {currentDirectoy}");
+                }
             }
         }
 
         private void UploadFile(string FileName)
         {
             var videoInfo = new VideoInfo(FileName);
-            Console.WriteLine($"Uploding filename [{videoInfo.Name}]");
+            //Console.WriteLine($"Uploding filename [{videoInfo.Name}]");
             NestUploader.UploadVideoDocumment(videoInfo);
 
         }
