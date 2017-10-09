@@ -1,5 +1,6 @@
 ﻿using System;
 using dcmc.shared;
+using Microsoft.Extensions.Configuration;
 
 namespace dcmc.console
 {
@@ -7,10 +8,22 @@ namespace dcmc.console
     {
         static void Main(string[] args)
         {
+            var appConfig = new ConfigurationBuilder()
+                .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            var elastic = appConfig["elasticsearchURI"];
+            Console.WriteLine($"ES {elastic}");
+
+
             Console.WriteLine("Starting Tasks");
-            var nestie = new NestClient("http://beast2:9200");
-            nestie.AddSeedData();
+            var nestie = new NestClient(elastic);
+            //nestie.AddSeedData();
+            var myUploader = new Uploader(nestie);
+            myUploader.Upload(@"C:\github\Main");
             Console.WriteLine("AllDone");
+            Console.Read();
         }
     }
 }

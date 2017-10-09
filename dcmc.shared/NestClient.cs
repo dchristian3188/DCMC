@@ -11,20 +11,20 @@ namespace dcmc.shared
         public NestClient(string ServerName)
         {
             var settings = new ConnectionSettings(new Uri(ServerName))
-                .DefaultIndex("Video");
+                .DefaultIndex("videos");
             _client = new ElasticClient(settings);
+        }
+
+        public async void UploadVideoDocumment(VideoInfo NewVideoInfo)
+        {
+            var result = await _client.IndexAsync(NewVideoInfo);
+            Console.WriteLine(result);
         }
 
         public async void AddSeedData()
         {
-            var newVideo = new Video
-            {
-                Path = @"C:\somePath\blah\Hi.mp4",
-                Name = "SuperBad"
-            };
-            newVideo.Tags.Add("Comedy");
-            newVideo.Tags.Add("Mature");
-
+            var newVideo = new VideoInfo(@"C:\somePath\blah\Hi.mp4");
+            
             var result =  await _client.IndexAsync(newVideo);
             return;
         }
