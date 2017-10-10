@@ -17,12 +17,22 @@ namespace dcmc.console
             Console.WriteLine($"ES {elastic}");
 
 
-            Console.WriteLine("Starting Tasks");
+            Console.WriteLine("Starting Tasks - {0}", DateTime.Now);
+            var stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
             var nestie = new NestClient(elastic);
+
             //nestie.AddSeedData();
-            var myUploader = new Uploader(nestie);
-            myUploader.UploadDirectory(appConfig["RootPath"]);
-            Console.WriteLine("AllDone");
+
+            //var myUploader = new Uploader(nestie);
+            //myUploader.UploadDirectory(appConfig["RootPath"]);
+
+            nestie.GetVideoDocument();
+
+            stopWatch.Stop();
+            Console.WriteLine("AllDone - {0}", DateTime.Now);
+            Console.WriteLine(stopWatch.Elapsed);
             Console.Read();
         }
     }

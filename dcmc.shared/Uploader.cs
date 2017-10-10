@@ -16,18 +16,18 @@ namespace dcmc.shared
 
         public void UploadDirectory(string StartingFolder)
         {
+            logger.Info($"Processing folder [{StartingFolder}]");
+            var files = Directory.GetFiles(StartingFolder);
+            foreach (string file in files)
+            {
+                UploadFile(file);
+            }
 
             var directories = Directory.GetDirectories(StartingFolder);
             foreach (string currentDirectoy in directories)
             {
-               logger.Info($"Processing folder [{currentDirectoy}]");
                 try
                 {
-                    var files = Directory.GetFiles(currentDirectoy);
-                    foreach (string file in files)
-                    {
-                        UploadFile(file);
-                    }
                     UploadDirectory(currentDirectoy);
                 }
                 catch (System.UnauthorizedAccessException ex)

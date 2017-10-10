@@ -1,12 +1,15 @@
 using System;
-using System.Collections.Generic;
 using Nest;
+using NLog;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace dcmc.shared
 {
     public class NestClient
     {
         ElasticClient _client;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public NestClient(string ServerName)
         {
@@ -18,19 +21,33 @@ namespace dcmc.shared
         public async void UploadVideoDocumment(VideoInfo NewVideoInfo)
         {
             var result = await _client.IndexAsync(NewVideoInfo);
-            //TODO Add loggin
+            if (result.ServerError != null)
+            {
+                logger.Error(result.ApiCall);
+            }
         }
 
-        public async void AddSeedData()
+        public async Task<List<VideoInfo>> GetVideoDocument()
         {
-            var newVideo = new VideoInfo(@"C:\somePath\blah\Hi.mp4");
-            
-            var result =  await _client.IndexAsync(newVideo);
-            return;
-        }
+            logger.Info("Starting Search");
+            var searchResponse = await _client.SearchAsync<VideoInfo>(s => s
+                .Query(q => q
+                    .MatchAll()
+                 )
+                .Size(500)
+            );
 
-        //public IEnumerable<Video> GetAllVideos()
-        //{
-        //}
+
+            if(searchResponse.ServerError == null)
+            {
+                logger.Info($"Returning [{searchResponse.Hits}] hits");
+                return new List<VideoInfo>(searchResponse.Documents);
+            }
+            else
+            {
+                logger.Error($"No Results returned [{searchResponse.DebugInformation}]");
+                return new List<VideoInfo>();
+            }
+        }
     }
 }
