@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NEST" Version="5.5.0"/>
+    <PackageReference Include="NEST" Version="5.5.0" />
+    <PackageReference Include="NLog" Version="5.0.0-beta11" />
   </ItemGroup>
 </Project>

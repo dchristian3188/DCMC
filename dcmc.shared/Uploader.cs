@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.IO;
+using NLog;
+
 
 namespace dcmc.shared
 {
     public class Uploader
     {
         private NestClient NestUploader;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public Uploader(NestClient NestConnection)
         {
@@ -20,7 +20,7 @@ namespace dcmc.shared
             var directories = Directory.GetDirectories(StartingFolder);
             foreach (string currentDirectoy in directories)
             {
-                //Console.WriteLine($"Processing folder [{currentDirectoy}]");
+               logger.Info($"Processing folder [{currentDirectoy}]");
                 try
                 {
                     var files = Directory.GetFiles(currentDirectoy);
@@ -32,7 +32,7 @@ namespace dcmc.shared
                 }
                 catch (System.UnauthorizedAccessException ex)
                 {
-                    Console.WriteLine($"ERROR CONNECTING TO {currentDirectoy}");
+                    logger.Error($"ERROR CONNECTING TO {currentDirectoy}");
                 }
             }
         }
@@ -40,7 +40,7 @@ namespace dcmc.shared
         private void UploadFile(string FileName)
         {
             var videoInfo = new VideoInfo(FileName);
-            //Console.WriteLine($"Uploding filename [{videoInfo.Name}]");
+            logger.Info($"Uploding filename [{videoInfo.Name}]");
             NestUploader.UploadVideoDocumment(videoInfo);
 
         }
