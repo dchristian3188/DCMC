@@ -38,7 +38,7 @@ namespace dcmc.shared
             );
 
 
-            if(searchResponse.ServerError == null)
+            if (searchResponse.ServerError == null)
             {
                 logger.Info($"Returning [{searchResponse.Hits}] hits");
                 return new List<VideoInfo>(searchResponse.Documents);
@@ -47,6 +47,27 @@ namespace dcmc.shared
             {
                 logger.Error($"No Results returned [{searchResponse.DebugInformation}]");
                 return new List<VideoInfo>();
+            }
+        }
+
+        public VideoInfo GetVideoDocumentByID(string ID)
+        {
+            if(string.IsNullOrEmpty(ID))
+            {
+                throw new ArgumentNullException("ID cannot be empty");
+            }
+            var getRequest = new GetRequest("videos", "videoinfo", ID);
+            var getResponse = _client.Get<VideoInfo>(getRequest);
+
+            if (getResponse.Found)
+            {
+                logger.Info($"Found my for doc ID {ID}");
+                return getResponse.Source;
+            }
+            else
+            {
+                logger.Error($"Not match found for doc ID {ID}");
+                return new VideoInfo();
             }
         }
     }

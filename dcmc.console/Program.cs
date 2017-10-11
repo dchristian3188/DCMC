@@ -28,7 +28,7 @@ namespace dcmc.console
             //var myUploader = new Uploader(nestie);
             //myUploader.UploadDirectory(appConfig["RootPath"]);
 
-            nestie.GetVideoDocument();
+            nestie.GetVideoDocumentByID("somefakepath");
 
             stopWatch.Stop();
             Console.WriteLine("AllDone - {0}", DateTime.Now);
