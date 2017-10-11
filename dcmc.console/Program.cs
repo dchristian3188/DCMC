@@ -25,11 +25,11 @@ namespace dcmc.console
 
             //nestie.AddSeedData();
 
-            //var myUploader = new Uploader(nestie);
-            //myUploader.UploadDirectory(appConfig["RootPath"]);
+            var myUploader = new Uploader(nestie);
+            myUploader.UploadDirectory(appConfig["RootPath"]);
 
-            nestie.GetVideoDocumentByID("somefakepath");
-
+            //nestie.GetVideoDocumentByID("somefakepath");
+            
             stopWatch.Stop();
             Console.WriteLine("AllDone - {0}", DateTime.Now);
             Console.WriteLine(stopWatch.Elapsed);

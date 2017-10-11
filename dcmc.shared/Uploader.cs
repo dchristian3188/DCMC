@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using NLog;
+using System.Collections.Generic;
 
 
 namespace dcmc.shared
@@ -18,11 +19,11 @@ namespace dcmc.shared
         {
             logger.Info($"Processing folder [{StartingFolder}]");
             var files = Directory.GetFiles(StartingFolder);
-            foreach (string file in files)
+            if(files.Length > 0)
             {
-                UploadFile(file);
+                UploadFiles(files);
             }
-
+            
             var directories = Directory.GetDirectories(StartingFolder);
             foreach (string currentDirectoy in directories)
             {
@@ -41,9 +42,21 @@ namespace dcmc.shared
         {
             var videoInfo = new VideoInfo(FileName);
             logger.Info($"Uploding filename [{videoInfo.Name}]");
-            NestUploader.UploadVideoDocumment(videoInfo);
+            NestUploader.UploadVideoDocument(videoInfo);
 
         }
 
+        private void UploadFiles(string[] FileNames)
+        {
+            var videosToUpload = new List<VideoInfo>();
+            foreach(string file in FileNames)
+            {
+                logger.Debug($"Getting file information for [{file}]");
+                videosToUpload.Add(new VideoInfo(file));
+            }
+
+            NestUploader.UploadVideoDocument(videosToUpload);
+
+        }
     }
 }

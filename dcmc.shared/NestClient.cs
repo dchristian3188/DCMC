@@ -18,13 +18,45 @@ namespace dcmc.shared
             _client = new ElasticClient(settings);
         }
 
-        public async void UploadVideoDocumment(VideoInfo NewVideoInfo)
+        public async void UploadVideoDocument(VideoInfo NewVideoInfo)
         {
             var result = await _client.IndexAsync(NewVideoInfo);
             if (result.ServerError != null)
             {
-                logger.Error(result.ApiCall);
+                logger.Error(result.DebugInformation);
             }
+        }
+
+        public async void UploadVideoDocument(List<VideoInfo> NewVideoInfo)
+        {
+            var result = await _client.IndexManyAsync<VideoInfo>(NewVideoInfo);
+            if (result.Errors)
+            {
+                await RetryBulkUpload(NewVideoInfo, result);
+
+            }
+            else
+            {
+                logger.Info($"Indexed {NewVideoInfo.Count} items");
+            }
+        }
+
+        private async Task<IBulkResponse> RetryBulkUpload(List<VideoInfo> NewVideoInfo, IBulkResponse result)
+        {
+            logger.Error(result.DebugInformation);
+            logger.Error("Sleeping for 15 seconds");
+            System.Threading.Thread.Sleep(15000);
+            var retry = await _client.IndexManyAsync<VideoInfo>(NewVideoInfo);
+            if (retry.Errors)
+            {
+                logger.Fatal($"Unable to Upload {NewVideoInfo.Count}. {retry.DebugInformation}");
+            }
+            else
+            {
+                logger.Info($"Indexed {NewVideoInfo.Count} items on second try");
+            }
+
+            return result;
         }
 
         public async Task<List<VideoInfo>> GetVideoDocument()
