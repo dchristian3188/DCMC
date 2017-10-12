@@ -84,7 +84,7 @@ namespace dcmc.shared
 
         public VideoInfo GetVideoDocumentByID(string ID)
         {
-            if(string.IsNullOrEmpty(ID))
+            if (string.IsNullOrEmpty(ID))
             {
                 throw new ArgumentNullException("ID cannot be empty");
             }

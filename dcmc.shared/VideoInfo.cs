@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace dcmc.shared
 {
+
     public class VideoInfo
     {
         public VideoInfo()
@@ -11,23 +12,26 @@ namespace dcmc.shared
         public VideoInfo(string VideoPath)
         {
             var fileInfo = new FileInfo(VideoPath);
-            Id = VideoPath;
+            Id = Utility.MD5Hash(VideoPath);
+            FilePath = VideoPath;
             Tags = GenerateTags();
             Name = Path.GetFileNameWithoutExtension(VideoPath);
             Extension = fileInfo.Extension;
-            Size = fileInfo.Length;
+            SizeMB = (fileInfo.Length / 1048576); //Convert bytes to MB
         }
 
         public string Id { get; set; }
+        public string FilePath { get; set; }
         public string Name { get; set; }
         public string Extension { get; set; }
-        public long Size { get; set; }
+        public long SizeMB { get; set; }
+
         public List<string> Tags { get; set; }
 
         private List<string> GenerateTags()
         {
             var tagList = new List<string>();
-            tagList.AddRange(Id.Split('\\'));
+            tagList.AddRange(FilePath.Split('\\'));
             return tagList;
         }
     }
