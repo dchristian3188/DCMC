@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using dcmc.shared;
-
+using dcmc.webapi.Model;
 
 namespace dcmc.webapi.Controllers
 {
@@ -36,8 +36,16 @@ namespace dcmc.webapi.Controllers
 
         // POST: api/VideoInfo
         [HttpPost]
-        public void Post([FromBody]string value)
+        public ActionResult Post([FromBody]VideoInfoNameCreate VideoName)
         {
+            if (VideoName.FilePath == null)
+            {
+                return BadRequest("Filepath cannot be null");
+
+            }
+            var video = new VideoInfo(VideoName.FilePath);
+             _nestClient.UploadVideoDocument(video);
+            return NoContent();
         }
 
         // PUT: api/VideoInfo/5

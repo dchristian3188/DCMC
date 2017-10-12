@@ -17,7 +17,7 @@ namespace dcmc.shared
             Tags = GenerateTags();
             Name = Path.GetFileNameWithoutExtension(VideoPath);
             Extension = fileInfo.Extension;
-            SizeMB = (fileInfo.Length / 1048576); //Convert bytes to MB
+            SizeMB = fileInfo.Exists ? (fileInfo.Length / 1048576) : 0; //Convert bytes to MB
         }
 
         public string Id { get; set; }
