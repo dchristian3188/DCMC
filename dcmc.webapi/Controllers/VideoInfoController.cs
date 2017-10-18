@@ -13,17 +13,17 @@ namespace dcmc.webapi.Controllers
     [Route("api/VideoInfo")]
     public class VideoInfoController : Controller
     {
-        NestClient _nestClient;
-        public VideoInfoController()
+        IClient _client;
+        public VideoInfoController(IClient serviceClient)
         {
-            _nestClient = new NestClient("http://beast2:9200");
+            _client = serviceClient;
         }
 
         // GET: api/VideoInfo
         [HttpGet]
         public async Task<List<VideoInfo>> Get()
         {
-            return await _nestClient.GetVideoDocument();
+            return await _client.GetVideoDocument();
         }
 
 
@@ -31,7 +31,7 @@ namespace dcmc.webapi.Controllers
         [HttpGet("{id}", Name = "Get")]
         public VideoInfo Get(string id)
         {
-            return _nestClient.GetVideoDocumentByID(id);
+            return _client.GetVideoDocumentByID(id);
         }
 
         // POST: api/VideoInfo
@@ -44,7 +44,7 @@ namespace dcmc.webapi.Controllers
 
             }
             var video = new VideoInfo(VideoName.FilePath);
-             _nestClient.UploadVideoDocument(video);
+             _client.UploadVideoDocument(video);
             return NoContent();
         }
 

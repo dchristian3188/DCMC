@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace dcmc.shared
 {
-    public class NestClient
+    public class NestClient : IClient
     {
         ElasticClient _client;
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -32,7 +32,8 @@ namespace dcmc.shared
             var result = await _client.IndexManyAsync<VideoInfo>(NewVideoInfo);
             if (result.Errors)
             {
-                await RetryBulkUpload(NewVideoInfo, result);
+                logger.Error(result.DebugInformation);
+                await RetryBulkUpload(NewVideoInfo);
 
             }
             else
@@ -41,9 +42,9 @@ namespace dcmc.shared
             }
         }
 
-        private async Task<IBulkResponse> RetryBulkUpload(List<VideoInfo> NewVideoInfo, IBulkResponse result)
+        private async Task<IBulkResponse> RetryBulkUpload(List<VideoInfo> NewVideoInfo)
         {
-            logger.Error(result.DebugInformation);
+            
             logger.Error("Sleeping for 15 seconds");
             System.Threading.Thread.Sleep(15000);
             var retry = await _client.IndexManyAsync<VideoInfo>(NewVideoInfo);
@@ -56,7 +57,7 @@ namespace dcmc.shared
                 logger.Info($"Indexed {NewVideoInfo.Count} items on second try");
             }
 
-            return result;
+            return retry;
         }
 
         public async Task<List<VideoInfo>> GetVideoDocument()
@@ -102,5 +103,6 @@ namespace dcmc.shared
                 return new VideoInfo();
             }
         }
+       
     }
 }
