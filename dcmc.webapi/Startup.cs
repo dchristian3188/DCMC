@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using dcmc.shared;
-using NLog;
+using NLog.Web;
 
 namespace dcmc.webapi
 {
@@ -42,8 +42,8 @@ namespace dcmc.webapi
             }
 
             app.UseStaticFiles();
-
-            
+            app.AddNLogWeb();
+            env.ConfigureNLog("nlog.config");
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
