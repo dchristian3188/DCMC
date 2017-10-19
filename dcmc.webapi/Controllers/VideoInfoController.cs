@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using dcmc.shared;
 using dcmc.webapi.Model;
+using NLog;
+
 
 namespace dcmc.webapi.Controllers
 {
@@ -14,6 +16,7 @@ namespace dcmc.webapi.Controllers
     public class VideoInfoController : Controller
     {
         IClient _client;
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
         public VideoInfoController(IClient serviceClient)
         {
             _client = serviceClient;
@@ -23,6 +26,7 @@ namespace dcmc.webapi.Controllers
         [HttpGet]
         public async Task<List<VideoInfo>> Get()
         {
+            _logger.Info("Getting all records");
             return await _client.GetVideoDocument();
         }
 
@@ -31,6 +35,7 @@ namespace dcmc.webapi.Controllers
         [HttpGet("{id}", Name = "Get")]
         public VideoInfo Get(string id)
         {
+            _logger.Info($"Starting search for id {id}");
             return _client.GetVideoDocumentByID(id);
         }
 
@@ -40,6 +45,7 @@ namespace dcmc.webapi.Controllers
         {
             if (VideoName.FilePath == null)
             {
+                _logger.Error("Tried to upload video with a null name");
                 return BadRequest("Filepath cannot be null");
 
             }

@@ -73,7 +73,7 @@ namespace dcmc.shared
 
             if (searchResponse.ServerError == null)
             {
-                logger.Info($"Returning [{searchResponse.Hits}] hits");
+                logger.Info($"Returning [{searchResponse.Hits.Count}] hits");
                 return new List<VideoInfo>(searchResponse.Documents);
             }
             else
