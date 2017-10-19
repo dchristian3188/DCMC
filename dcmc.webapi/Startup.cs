@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using dcmc.shared;
+using NLog;
 
 namespace dcmc.webapi
 {
@@ -33,7 +34,7 @@ namespace dcmc.webapi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -41,6 +42,7 @@ namespace dcmc.webapi
             }
 
             app.UseStaticFiles();
+
             
             app.UseMvc(routes =>
             {
