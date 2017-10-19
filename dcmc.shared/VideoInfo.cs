@@ -9,15 +9,28 @@ namespace dcmc.shared
         public VideoInfo()
         { }
 
-        public VideoInfo(string VideoPath)
+        public VideoInfo(string VideoPath) : this(VideoPath, null)
+        {
+            
+        }
+
+        public VideoInfo(string VideoPath, List<string> CustomTags)
         {
             var fileInfo = new FileInfo(VideoPath);
             Id = Utility.MD5Hash(VideoPath);
             FilePath = VideoPath;
-            Tags = GenerateTags();
             Name = Path.GetFileNameWithoutExtension(VideoPath);
             Extension = fileInfo.Extension;
             SizeMB = fileInfo.Exists ? (fileInfo.Length / 1048576) : 0; //Convert bytes to MB
+
+            if (CustomTags == null)
+            {
+                Tags = GenerateTags();
+            }
+            else
+            {
+                Tags = CustomTags;
+            }
         }
 
         public string Id { get; set; }

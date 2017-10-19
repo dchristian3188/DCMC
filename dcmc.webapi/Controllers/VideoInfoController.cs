@@ -48,16 +48,32 @@ namespace dcmc.webapi.Controllers
             return NoContent();
         }
 
+        // POST: api/VideoInfo
+        [HttpPatch]
+        public ActionResult Post([FromBody]VideoInfoTagUpdate VideoInfoWithTags)
+        {
+            if (VideoInfoWithTags.FilePath == null)
+            {
+                return BadRequest("Filepath cannot be null");
+
+            }
+            var video = new VideoInfo(VideoInfoWithTags.FilePath,VideoInfoWithTags.Tags);
+            _client.UploadVideoDocument(video);
+            return NoContent();
+        }
+
         // PUT: api/VideoInfo/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
+            throw new NotSupportedException("Posting by ID not supported at this time");
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            throw new NotSupportedException("Deleting by ID not supported at this time");
         }
     }
 }
