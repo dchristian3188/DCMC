@@ -8,6 +8,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dcmc.console", "dcmc.consol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dcmc.webapi", "dcmc.webapi\dcmc.webapi.csproj", "{7242C1E3-B95C-4FCF-9BF6-060EEE6AD86A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dcmc.web", "dcmc.web\dcmc.web.csproj", "{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,18 @@ Global
 		{7242C1E3-B95C-4FCF-9BF6-060EEE6AD86A}.Release|x64.Build.0 = Release|Any CPU
 		{7242C1E3-B95C-4FCF-9BF6-060EEE6AD86A}.Release|x86.ActiveCfg = Release|Any CPU
 		{7242C1E3-B95C-4FCF-9BF6-060EEE6AD86A}.Release|x86.Build.0 = Release|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Debug|x64.Build.0 = Debug|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Debug|x86.Build.0 = Debug|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Release|x64.ActiveCfg = Release|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Release|x64.Build.0 = Release|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Release|x86.ActiveCfg = Release|Any CPU
+		{BB0AD0BA-EB62-4210-9FF8-19E9BA342E59}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

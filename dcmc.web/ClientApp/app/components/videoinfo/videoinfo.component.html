@@ -1,0 +1,24 @@
+﻿<h1>DC PlayList</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!videos"><em>Loading...</em></p>
+
+<table class='table' *ngIf="videos">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Extension</th>
+            <th>Size MB</th>
+            <th>Tags</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let video of videos">
+            <td>{{ video.name }}</td>
+            <td>{{ video.extension }}</td>
+            <td>{{ video.sizeMB }}</td>
+            <td>{{ video.tags }}</td>
+        </tr>
+    </tbody>
+</table>
