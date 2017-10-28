@@ -3,22 +3,28 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <p *ngIf="!videos"><em>Loading...</em></p>
+<div class="form-group-sm">
+    <label for="filterString">Filter: </label>
+    <input type="text" class="form-control" id="filterstring" [(ngModel)]="filterString" />
+</div>
 
-<table class='table' *ngIf="videos">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Extension</th>
-            <th>Size MB</th>
-            <th>Tags</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let video of videos">
-            <td>{{ video.name }}</td>
-            <td>{{ video.extension }}</td>
-            <td>{{ video.sizeMB }}</td>
-            <td>{{ video.tags }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class='table' *ngIf="filteredVideos">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Extension</th>
+                <th>Size MB</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let video of filteredVideos">
+                <td>{{ video.name }}</td>
+                <td>{{ video.extension }}</td>
+                <td>{{ video.sizeMB }}</td>
+                <td>{{ video.tags }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
